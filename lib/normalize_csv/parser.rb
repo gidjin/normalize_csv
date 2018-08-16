@@ -1,6 +1,7 @@
 require 'csv'
 require 'time'
 require 'active_support/time'
+require 'normalize_csv/row'
 
 module NormalizeCsv
   module Parser

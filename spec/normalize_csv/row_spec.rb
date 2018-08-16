@@ -1,5 +1,3 @@
-require 'normalize_csv/row'
-
 RSpec.describe NormalizeCsv::Row do
   let(:timestamp) { Time.now }
   let(:address) { '221b Baker St.' }

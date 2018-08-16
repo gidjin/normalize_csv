@@ -1,6 +1,3 @@
-require 'normalize_csv/parser'
-require 'normalize_csv/row'
-
 RSpec.describe NormalizeCsv::Parser do
   describe '#parse' do
     describe 'with utf-8' do
