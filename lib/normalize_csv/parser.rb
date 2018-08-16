@@ -22,25 +22,29 @@ module NormalizeCsv
 
     private
 
+    def self.sanitize_utf8(string)
+      string.encode('UTF-8', invalid: :replace, undef: :replace)
+    end
+
     def self.parse_timestamp(timestamp)
       ENV['TZ'] = 'US/Pacific'
-      Time.strptime(timestamp, '%m/%d/%y %I:%M:%S %p').in_time_zone('US/Pacific')
+      Time.strptime(sanitize_utf8(timestamp), '%m/%d/%y %I:%M:%S %p').in_time_zone('US/Pacific')
     end
 
     def self.parse_address(address)
-      address
+      sanitize_utf8(address)
     end
 
     def self.parse_zip(zip)
-      zip.to_i
+      sanitize_utf8(zip).to_i
     end
 
     def self.parse_full_name(full_name)
-      full_name
+      sanitize_utf8(full_name)
     end
 
     def self.parse_duration(duration)
-      matches = /(?<hours>\d\d?):(?<minutes>\d\d?):(?<seconds>\d\d?).(?<milliseconds>\d+)/.match(duration)
+      matches = /(?<hours>\d\d?):(?<minutes>\d\d?):(?<seconds>\d\d?).(?<milliseconds>\d+)/.match(sanitize_utf8(duration))
 
       duration = (matches[:hours].to_i * 60 * 60) +
         (matches[:minutes].to_i * 60) +
@@ -49,7 +53,7 @@ module NormalizeCsv
     end
 
     def self.parse_notes(notes)
-      notes
+      sanitize_utf8(notes)
     end
   end
 end
