@@ -1,0 +1,10 @@
+Metrics/LineLength:
+  Max: 100
+Metrics/BlockLength:
+  Max: 40
+  Exclude:
+    - 'spec/**/*'
+Style/NumericLiterals:
+  MinDigits: 6
+Style/Documentation:
+  Enabled: false
