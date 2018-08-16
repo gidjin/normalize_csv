@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'normalize_csv/row'
 
 RSpec.describe NormalizeCsv do
@@ -11,7 +13,7 @@ RSpec.describe NormalizeCsv do
     let(:csv_line2) { '5/1/11 11:00:00 AM,"124 4th ☃  St, Anywhere, AA",94121,Monkey 🐵 Alberto,1:2:3.123,1:2:3.123,zzsasdfa⚑,I am the very model of a modern major general ⚑' }
     let(:expected_row) do
       NormalizeCsv::Row.new(
-        timestamp: Time.new(2011,4,1,11,0,0, "-07:00").in_time_zone('US/Pacific'),
+        timestamp: Time.new(2011, 4, 1, 11, 0, 0, '-07:00').in_time_zone('US/Pacific'),
         address: '123 4th ☃  St, Anywhere, AA',
         zip: 94121,
         full_name: 'Monkey 🐵 Alberto',
@@ -22,7 +24,7 @@ RSpec.describe NormalizeCsv do
     end
     let(:expected_row2) do
       NormalizeCsv::Row.new(
-        timestamp: Time.new(2011,5,1,11,0,0, "-07:00").in_time_zone('US/Pacific'),
+        timestamp: Time.new(2011, 5, 1, 11, 0, 0, '-07:00').in_time_zone('US/Pacific'),
         address: '124 4th ☃  St, Anywhere, AA',
         zip: 94121,
         full_name: 'Monkey 🐵 Alberto',
@@ -69,7 +71,7 @@ RSpec.describe NormalizeCsv do
 
     it 'handles nil parsed row' do
       allow(NormalizeCsv::Parser).to receive(:parse).and_return(nil)
-      expect{NormalizeCsv.process}.not_to raise_error
+      expect { NormalizeCsv.process }.not_to raise_error
     end
   end
 end

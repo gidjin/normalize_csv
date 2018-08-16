@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe NormalizeCsv::Row do
   let(:timestamp) { Time.now }
   let(:address) { '221b Baker St.' }

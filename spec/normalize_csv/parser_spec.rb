@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe NormalizeCsv::Parser do
   describe '#parse' do
     describe 'with utf-8' do
@@ -5,7 +7,7 @@ RSpec.describe NormalizeCsv::Parser do
         let(:csv_line) { '4/1/11 11:00:00 AM,"123 4th ☃  St, Anywhere, AA",94121,Monkey 🐵 Alberto,1:2:3.123,1:2:3.123,zzsasdfa⚑,I am the very model of a modern major general ⚑' }
         let(:expected_row) do
           NormalizeCsv::Row.new(
-            timestamp: Time.new(2011,4,1,11,0,0, "-07:00").in_time_zone('US/Pacific'),
+            timestamp: Time.new(2011, 4, 1, 11, 0, 0, '-07:00').in_time_zone('US/Pacific'),
             address: '123 4th ☃  St, Anywhere, AA',
             zip: 94121,
             full_name: 'Monkey 🐵 Alberto',
@@ -36,7 +38,7 @@ RSpec.describe NormalizeCsv::Parser do
           let(:csv_line) { '4/1/11 11:00:00 AM,"123 4th ☃  St, Anywhere, AA",94121,Monkey 🐵 Alberto,1:2:3.123,1:2:3.123,zzsasdfa⚑,' }
           let(:expected_row) do
             NormalizeCsv::Row.new(
-              timestamp: Time.new(2011,4,1,11,0,0, "-07:00").in_time_zone('US/Pacific'),
+              timestamp: Time.new(2011, 4, 1, 11, 0, 0, '-07:00').in_time_zone('US/Pacific'),
               address: '123 4th ☃  St, Anywhere, AA',
               zip: 94121,
               full_name: 'Monkey 🐵 Alberto',
@@ -55,15 +57,15 @@ RSpec.describe NormalizeCsv::Parser do
       describe 'that is NOT valid' do
         # "2/29/16 12:11:11 PM,111 Ste. #123123123,1101,R\xC3\x83\xC2\xA9sum\xC3\x83\xC2\xA9 Ron,31:23:32.123,1:32:33.123,zzsasdfa,\xC3\xB0\x99!"
         let(:csv_line) do
-          [50, 47, 50, 57, 47, 49, 54, 32, 49, 50, 58, 49, 49, 58, 49, 49, 32, 80, 77, 44, 49, 49, 49, 32, 83, 116, 101, 46, 32, 35, 49, 50, 51, 49, 50, 51, 49, 50, 51, 44, 49, 49, 48, 49, 44, 82, 195, 131, 194, 169, 115, 117, 109,195, 131, 194, 169, 32, 82, 111, 110, 44, 51, 49, 58, 50, 51, 58, 51, 50, 46, 49, 50, 51, 44, 49, 58, 51, 50, 58, 51, 51, 46, 49, 50, 51, 44, 122, 122, 115, 97, 115, 100, 102, 97, 44, 195, 176, 153, 33].pack('c*')
+          [50, 47, 50, 57, 47, 49, 54, 32, 49, 50, 58, 49, 49, 58, 49, 49, 32, 80, 77, 44, 49, 49, 49, 32, 83, 116, 101, 46, 32, 35, 49, 50, 51, 49, 50, 51, 49, 50, 51, 44, 49, 49, 48, 49, 44, 82, 195, 131, 194, 169, 115, 117, 109, 195, 131, 194, 169, 32, 82, 111, 110, 44, 51, 49, 58, 50, 51, 58, 51, 50, 46, 49, 50, 51, 44, 49, 58, 51, 50, 58, 51, 51, 46, 49, 50, 51, 44, 122, 122, 115, 97, 115, 100, 102, 97, 44, 195, 176, 153, 33].pack('c*')
         end
         let(:expected_row) do
           NormalizeCsv::Row.new(
-            timestamp: Time.new(2016,2,29,12,11,11, "-08:00").in_time_zone('US/Pacific'),
+            timestamp: Time.new(2016, 2, 29, 12, 11, 11, '-08:00').in_time_zone('US/Pacific'),
             address: '111 Ste. #123123123',
             zip: 1101,
             full_name: 'R����sum���� Ron',
-            foo_duration: 113012.123,
+            foo_duration: 113_012.123,
             bar_duration: 5553.123,
             notes: '���!'
           )
@@ -91,7 +93,7 @@ RSpec.describe NormalizeCsv::Parser do
       let(:csv_line) { '4/1/11 11:00:00 AM,"123 4th St, Anywhere, AA",94121,Monkey Alberto,1:2:3.123,1:2:3.123,zzsasdfa,I am the very model of a modern major general' }
       let(:expected_row) do
         NormalizeCsv::Row.new(
-          timestamp: Time.new(2011,4,1,11,0,0, "-07:00").in_time_zone('US/Pacific'),
+          timestamp: Time.new(2011, 4, 1, 11, 0, 0, '-07:00').in_time_zone('US/Pacific'),
           address: '123 4th St, Anywhere, AA',
           zip: 94121,
           full_name: 'Monkey Alberto',

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Class represents data from a parsed row of csv input
 module NormalizeCsv
   class Row
