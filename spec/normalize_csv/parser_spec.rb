@@ -50,5 +50,20 @@ RSpec.describe NormalizeCsv::Parser do
         expect(result.notes).to eq(expected_row.notes)
       end
     end
+
+    describe 'with bad data' do
+      let(:bad_duration) { '4/1/11 11:00:00 AM,"123 4th St, Anywhere, AA",94121,Monkey Alberto,a:2:3.123,1:2:3.123,zzsasdfa,I am the very model of a modern major general' }
+      let(:bad_date) { '4/1/ya11 11:00:00 AM,"123 4th St, Anywhere, AA",94121,Monkey Alberto,1:2:3.123,1:2:3.123,zzsasdfa,I am the very model of a modern major general' }
+
+      it 'skips lines with invalid duration' do
+        allow(STDERR).to receive(:puts).with("Warning: skipping row. Invalid data detected '#{bad_duration}'.")
+        expect(NormalizeCsv::Parser.parse(bad_duration)).to be_nil
+      end
+
+      it 'skips lines with invalid date' do
+        allow(STDERR).to receive(:puts).with("Warning: skipping row. Invalid data detected '#{bad_date}'.")
+        expect(NormalizeCsv::Parser.parse(bad_date)).to be_nil
+      end
+    end
   end
 end

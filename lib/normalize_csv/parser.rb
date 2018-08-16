@@ -16,6 +16,8 @@ module NormalizeCsv
           notes: parse_notes(row[7])
         )
       end
+    rescue
+      STDERR.puts "Warning: skipping row. Invalid data detected '#{csv_line}'."
     end
 
     private
