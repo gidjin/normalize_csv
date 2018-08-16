@@ -24,12 +24,12 @@ module NormalizeCsv
     private
 
     def self.sanitize_utf8(string)
-      string.encode('UTF-8', invalid: :replace, undef: :replace)
+      string.encode('UTF-8', invalid: :replace, undef: :replace) unless string.nil?
     end
 
     def self.parse_timestamp(timestamp)
       ENV['TZ'] = 'US/Pacific'
-      Time.strptime(sanitize_utf8(timestamp), '%m/%d/%y %I:%M:%S %p').in_time_zone('US/Pacific')
+      Time.strptime(sanitize_utf8(timestamp), '%m/%d/%y %l:%M:%S %p').in_time_zone('US/Pacific')
     end
 
     def self.parse_address(address)

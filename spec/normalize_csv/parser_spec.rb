@@ -31,6 +31,26 @@ RSpec.describe NormalizeCsv::Parser do
         it 'returns correct notes' do
           expect(result.notes).to eq(expected_row.notes)
         end
+
+        describe 'with blank column' do
+          let(:csv_line) { '4/1/11 11:00:00 AM,"123 4th ☃  St, Anywhere, AA",94121,Monkey 🐵 Alberto,1:2:3.123,1:2:3.123,zzsasdfa⚑,' }
+          let(:expected_row) do
+            NormalizeCsv::Row.new(
+              timestamp: Time.new(2011,4,1,11,0,0, "-07:00").in_time_zone('US/Pacific'),
+              address: '123 4th ☃  St, Anywhere, AA',
+              zip: 94121,
+              full_name: 'Monkey 🐵 Alberto',
+              foo_duration: 3723.123,
+              bar_duration: 3723.123,
+              notes: nil
+            )
+          end
+          let(:result) { NormalizeCsv::Parser.parse(csv_line) }
+
+          it 'returns correct notes' do
+            expect(result.notes).to eq(expected_row.notes)
+          end
+        end
       end
       describe 'that is NOT valid' do
         # "2/29/16 12:11:11 PM,111 Ste. #123123123,1101,R\xC3\x83\xC2\xA9sum\xC3\x83\xC2\xA9 Ron,31:23:32.123,1:32:33.123,zzsasdfa,\xC3\xB0\x99!"
